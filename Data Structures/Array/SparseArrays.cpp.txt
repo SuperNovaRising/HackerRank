@@ -1,0 +1,34 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+    int N, Q, count = 0;
+    string s, q;
+    cin >> N;
+    string S[N];
+    
+    for (int i = 0; i < N; i++) {
+        cin >> s;
+        S[i] = s;
+    }
+    
+    cin >> Q;
+    for (int i = 0; i < Q; i++){
+        cin >> q;
+        for (int j = 0; j < N; j++){
+            if (S[j] == q)
+                count++;
+        }
+        cout << count << endl;
+        count = 0;
+    }
+    
+        
+    return 0;
+}

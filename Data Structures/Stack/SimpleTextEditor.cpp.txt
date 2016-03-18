@@ -1,0 +1,57 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <stack>
+using namespace std;
+
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+    int N, k;
+    stack<string> S;
+    string op, s, text;
+    
+    cin >> N;
+    for (int i = 0; i < N; i++){
+        cin >> op;
+        if (op == "1"){
+            cin >> s;
+            S.push(s);
+            S.push(op);
+            text += s;
+        }
+        // erase
+        else if (op == "2"){
+            cin >> k;
+            string tmp = text.substr(text.size() - k, k);
+            S.push(tmp);
+            S.push(op);
+            text = text.substr(0, text.size() - k);
+        }
+        // get
+        else if (op == "3"){
+            cin >> k;
+            k--;
+            cout << text[k] << endl;
+        }
+        // undo
+        else{
+            string op = S.top();
+            S.pop();
+            if (op == "1"){
+                string tmp = S.top();
+                S.pop();
+                text = text.substr(0, text.size() - tmp.size());
+            }
+            if (op == "2"){
+                string tmp = S.top();
+                S.pop();
+                text += tmp;
+            }
+        }
+        
+    }
+    return 0;
+}

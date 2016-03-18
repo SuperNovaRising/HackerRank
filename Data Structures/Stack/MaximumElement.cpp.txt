@@ -1,0 +1,57 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <stack>
+using namespace std;
+
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+    int N, op, x, max = 0;
+    stack<int> S;
+    stack <pair <int, int>> M;
+    cin >> N;
+    
+    // dummy
+    pair <int, int> e(0, 0);
+    M.push(e); S.push(0);
+    
+    for (int i = 0; i < N; i++){
+        cin >> op;
+        if (op == 1){
+            cin >> x;
+            S.push(x);
+            
+            if (x == get<0>(M.top())){
+                pair <int, int> e(get<0>(M.top()), get<1>(M.top()) + 1);
+                M.pop();
+                M.push(e);
+            }
+            else if (x > get<0>(M.top())){
+                pair<int, int> e(x, 1);
+                M.push(e);
+            }
+                
+        }
+        else if (op == 2){
+            int val = S.top();
+            if (val == get<0>(M.top())) {
+                if (get<1>(M.top()) == 1)
+                    M.pop();
+                else {
+                    pair <int, int> e(get<0>(M.top()), get<1>(M.top()) - 1);
+                    M.pop();
+                    M.push(e);
+                }
+            }
+            S.pop();
+        }
+        else{
+            cout << get<0>(M.top()) << endl;
+        }
+    }
+    
+    return 0;
+}
