@@ -1,0 +1,36 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <stack>
+using namespace std;
+
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+    int N;
+    string s;
+    cin >> N;
+    
+    for (int i = 0; i < N; i++){
+        stack<char> S;
+        cin >> s;
+        for (char c : s) {
+            if (!S.empty()){
+                if ((c == ')' && S.top() == '(') ||
+                    ( c == ']' && S.top() == '[') ||
+                    (c == '}' && S.top() == '{'))
+                    S.pop();
+                else
+                    S.push(c);
+            }
+            else
+                S.push(c);
+        }
+        S.empty()? cout << "YES" : cout << "NO";
+        cout << endl;
+    }
+    
+    return 0;
+}

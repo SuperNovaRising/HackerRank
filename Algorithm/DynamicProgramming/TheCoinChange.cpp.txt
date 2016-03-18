@@ -1,0 +1,35 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+long long DP(int N, vector<int> &coins){
+    vector<long long> comb(N+1, 0);
+    comb[0] = 1;
+    for (int c : coins){
+        for (int j = c; j <=N; j++){
+            comb[j] += comb[j-c];
+        }
+    }
+    return comb[N];
+}
+
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+    int N, M, x;
+    long long methods;
+    vector<int> coins;
+    cin >> N >> M;
+    for (int i = 0; i < M; i++){
+        cin >> x;
+        coins.push_back(x);
+    }
+    
+    methods = DP(N, coins);
+    cout << methods << endl;
+    
+    return 0;
+}

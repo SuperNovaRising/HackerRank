@@ -1,0 +1,44 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <string.h>
+using namespace std;
+
+bool comp(char c1, char c2){
+    return tolower(c1) < tolower(c2);
+}
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+    int t;
+    string word, sub, left;
+    bool found;
+    cin >> t;
+    for (int i = 0; i < t; i++) {
+        found = false;
+        cin >> word;
+        if (word.size() == 1){
+            cout << "no answer" <<endl;
+            continue;
+        }
+        
+        for (int j =  2; j < word.size()+ 1; j++ ) {
+            left = word.substr(0, word.size() - j);
+            sub = word.substr(word.size()-j, word.size());
+           // cout << left << " " << sub <<endl;
+            if (next_permutation(sub.begin(), sub.end())){
+                cout << left << sub <<endl;
+                found = true;
+                break;
+             }
+        }
+        if (!found) {
+            cout << "no answer" << endl;
+            continue;
+        }
+        
+    }
+    return 0;
+}

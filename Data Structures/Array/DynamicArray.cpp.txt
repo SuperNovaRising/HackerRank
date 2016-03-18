@@ -1,0 +1,33 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+    int N, Q;
+    cin >> N >> Q;
+    int n, x, y;
+    vector <vector<int> > S(N);
+    int lastans = 0;
+    int tmp;
+    int seq;
+    for (int i = 0; i < Q; i++) {
+        cin >> n >> x >> y;
+        // "1 x y" - Insert y at the end of the ((x?lastans) mod N)th sequence.
+            if (n == 1)
+                S[(x ^ lastans) % N].push_back(y);
+        // "22 x y" - Print the value of the (y mod sizesize)th element of the ((x?lastansx) mod NN)th sequence. 
+        // Here, sizesize denotes the size of the related sequence. Then, assign this integer to lastanslastans.
+            else {
+                 seq = (x ^ lastans) % N;
+                 tmp = S[seq][y % S[seq].size()];
+                 cout << tmp <<endl;
+                 lastans = tmp;
+            }
+    }
+    return 0;
+}

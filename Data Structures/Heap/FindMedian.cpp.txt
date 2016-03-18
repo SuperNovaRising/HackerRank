@@ -1,0 +1,99 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+template <typename T>
+void print(vector<T> &v){
+    for_each(v.begin(), v.end(), [](T x) {cout << x ;});
+    //cout << endl;
+} 
+    
+template <typename T>
+void put_to_lower(vector<T> &v, T x){
+    //cout << "put to lower" << endl;
+    v.push_back(x);
+    push_heap(v.begin(), v.end());
+    //print(v);
+}
+
+template <typename T>
+T remove_from_lower(vector<T> &v){
+    //cout << "remove from lower" << endl;
+    T tmp = v[0];
+    pop_heap(v.begin(), v.end());
+    v.pop_back();
+    //print(v);
+    return tmp;
+}
+
+template <typename T>
+void put_to_upper(vector<T> &v, T x){
+    //cout << "put to upper" << endl;
+     v.push_back(x);
+    push_heap(v.begin(), v.end(), [](T x, T y) {return x > y;});
+    //print(v);
+}
+
+template <typename T>
+T remove_from_upper(vector<T> &v){
+    //cout << "remove from upper" << endl;
+    T tmp = v[0];
+    pop_heap(v.begin(), v.end(), [](T x, T y){ return x > y;});
+    v.pop_back();
+    //print(v);
+    return tmp;
+}
+
+template <typename T>
+void balance_heap(vector<T> &lower, vector<T> &upper){
+    // diff = 2 reduce to diff = 2
+    //cout << "balance_heap" << endl;
+    T tmp;
+    if (lower.size() < upper.size()){
+        tmp = remove_from_upper(upper);
+        put_to_lower(lower, tmp);
+    }
+    if (lower.size() > upper.size()){
+        tmp = remove_from_lower(lower);
+        put_to_upper(upper, tmp);
+    }
+    //print(lower);
+    //print(upper);
+}
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+    // lower carries lower half, upper carries upper half
+    int N, x;
+    float med;
+    vector<int> lower, upper;
+    make_heap(lower.begin(), lower.end());
+    make_heap(upper.begin(), upper.end(), [](int x, int y){return x > y;});
+    
+    cin >> N;
+    
+    for (int i = 0; i < N; i++){
+        cin >> x;
+        if (upper.size() == 0 || x > upper[0])
+            put_to_upper(upper, x);
+        else if (lower.size() == 0 || x < lower[0])
+            put_to_lower(lower, x);
+        else
+            put_to_lower(lower, x);
+            
+        if ((upper.size() - lower.size()) == 2 || upper.size() - lower.size() == -2)
+            balance_heap(lower, upper);
+        //cout << "size: " << lower.size() << " " << upper.size() << endl;    
+        if (lower.size() < upper.size())    
+            med = upper[0]/1.0;
+        else if (lower.size() > upper.size())
+            med = lower[0]/1.0;
+        else
+            med = (lower[0] + upper[0]) / 2.0;
+        printf("%.1f\n", med);
+    }
+    return 0;
+}

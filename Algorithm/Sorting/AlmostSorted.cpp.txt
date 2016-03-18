@@ -1,0 +1,50 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <climits>
+using namespace std;
+
+void print_vector(const vector<int> &v) {
+    for (int c : v)
+        cout << c << " ";
+    cout << endl;
+}
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+    int N, x;
+    
+    cin >> N;
+    vector<int> v(N), sub;
+    for (int i = 0; i < N; i++) {
+        cin >> x;
+        v[i] = x;
+    }
+    
+    if (is_sorted(v.begin(), v.end())) {
+        cout << "yes" << endl;
+        return 0;
+    }
+    
+    vector<int> sorted(v.begin(), v.end());
+    sort(sorted.begin(), sorted.end());
+    for (int i = 0; i < N; i++) {
+        if (v[i] != sorted[i])
+            sub.push_back(i);
+    }
+    
+    if (sub.size() == 2) {
+        cout << "yes\nswap " << sub.front() + 1 << " " << sub.back() + 1<< endl;
+    }
+    else {
+        reverse(v.begin() + sub.front(), v.begin() + sub.back() + 1);
+        if (is_sorted(v.begin(), v.end()))
+            cout << "yes\nreverse " << sub.front() + 1 << " " << sub.back() + 1<< endl;
+        else
+            cout << "no" << endl;
+    }
+    
+    return 0;
+}
